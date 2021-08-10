@@ -116,9 +116,7 @@ class JWT:
 
         header = {"class": token_type}
 
-        token = jwt.encode(
-            payload, secret, algorithm, header, cls.config.json_encoder
-        )
+        token = jwt.encode(payload, secret, algorithm, header, cls.config.json_encoder)
 
         return token
 

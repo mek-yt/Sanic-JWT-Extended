@@ -12,13 +12,13 @@ endif
 	poetry install
 
 check:
-	isort --recursive --multi-line=3 --trailing-comma --force-grid-wrap=0 --use-parentheses --line-width=88 --check-only sanic_jwt_extended tests
+	isort --multi-line=3 --trailing-comma --force-grid-wrap=0 --use-parentheses --line-width=88 --check-only sanic_jwt_extended tests
 	black -S --check sanic_jwt_extended tests
 	mypy sanic_jwt_extended
 	pylint sanic_jwt_extended
 
 format:
-	isort -rc -y --multi-line=3 --trailing-comma --force-grid-wrap=0 --use-parentheses --line-width=88 sanic_jwt_extended tests
+	isort --multi-line=3 --trailing-comma --force-grid-wrap=0 --use-parentheses --line-width=88 sanic_jwt_extended tests
 	black -S sanic_jwt_extended tests
 
 clean:

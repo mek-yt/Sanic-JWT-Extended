@@ -1,5 +1,6 @@
-import pytest
 import uuid
+
+import pytest
 from sanic import Sanic
 from sanic.response import json
 from sanic.websocket import WebSocketProtocol

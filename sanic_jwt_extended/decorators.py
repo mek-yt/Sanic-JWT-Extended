@@ -137,7 +137,11 @@ def _csrf_check(csrf_from_request, csrf_from_jwt):
 
 
 def jwt_required(
-    function=None, *, allow=None, deny=None, fresh_required=False,
+    function=None,
+    *,
+    allow=None,
+    deny=None,
+    fresh_required=False,
 ):
     def real(fn):
         @wraps(fn)
