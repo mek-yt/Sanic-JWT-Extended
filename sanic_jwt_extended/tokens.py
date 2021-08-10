@@ -55,22 +55,24 @@ class Token:
             nbf = self.raw_data["nbf"]
             iat = self.raw_data["iat"]
             jti = self.raw_data["jti"]
-        except KeyError as e:
+        except KeyError as exception:
             raise JWTDecodeError(
-                f"Can not get registered claims from payload. missing {e}"
-            )
+                f"Can not get registered claims from payload. missing {exception}"
+            ) from exception
 
         try:
             self.jti = uuid.UUID(jti)
-        except Exception:
-            raise JWTDecodeError(f"Wrong jti")
+        except Exception as exception:
+            raise JWTDecodeError(f"Wrong jti") from exception
 
         try:
             self.exp = datetime.datetime.utcfromtimestamp(exp) if exp else None
             self.nbf = datetime.datetime.utcfromtimestamp(nbf)
             self.iat = datetime.datetime.utcfromtimestamp(iat)
-        except Exception:
-            raise JWTDecodeError(f"Wrong timestamp for 'nbf' or/and 'iat'")
+        except Exception as exception:
+            raise JWTDecodeError(
+                f"Wrong timestamp for 'nbf' or/and 'iat'"
+            ) from exception
 
         self.public_claims = (
             self._get_public_claims() if JWT.config.public_claim_namespace else {}

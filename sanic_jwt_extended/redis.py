@@ -13,7 +13,7 @@ class RedisConnection:  # pragma: no cover
         if cls.redis and not cls.redis.closed:
             return cls.redis
 
-        cls.redis = await aioredis.create_redis_pool(cls.connection_info)
+        cls.redis = await aioredis.from_url(cls.connection_info)
         return cls.redis
 
     @classmethod
@@ -24,27 +24,23 @@ class RedisConnection:  # pragma: no cover
     @classmethod
     async def release(cls):
         if cls.redis:
-            cls.redis.close()
-            await cls.redis.wait_closed()
-
+            del cls.redis
         cls.redis = None
 
     @classmethod
     async def set(cls, key: str, value: Any, **kwargs) -> None:
-        redis = await cls._get_redis_connection()
-
-        dumped_value = ujson.dumps(value)
-        await redis.set(key, dumped_value, **kwargs)
+        async with cls._get_redis_connection().client() as connection:
+            dumped_value = ujson.dumps(value)
+            await connection.set(key, dumped_value, **kwargs)
 
     @classmethod
     async def get(cls, key: str) -> Any:
-        redis = await cls._get_redis_connection()
-        value = await redis.get(key)
-        value = ujson.loads(value) if value else None
-
-        return value
+        async with cls._get_redis_connection().client() as connection:
+            value = await connection.get(key)
+            value = ujson.loads(value) if value else None
+            return value
 
     @classmethod
     async def delete(cls, *keys: str):
-        redis = await cls._get_redis_connection()
-        await redis.delete(*keys)
+        async with cls._get_redis_connection().client() as connection:
+            await connection.delete(*keys)

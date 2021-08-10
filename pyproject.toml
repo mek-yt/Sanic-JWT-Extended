@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "Sanic-JWT-Extended"
-version = "1.0-dev.12"
+version = "1.0-dev.13"
 description = "Extended JWT integration with Sanic"
 authors = [
     "Seonghyeon Kim <kim@seonghyeon.dev>"
@@ -15,31 +15,29 @@ classifiers=[
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.9",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ]
 
 [tool.poetry.dependencies]
-python = "^3.6"
-sanic = ">= 18.12.0"
-PyJWT = "^1.6.4"
-dataclasses = { version = "*", python = "3.6.*" }
-flatten-dict = "^0.2.0"
-aioredis = "^1.3"
+python = "^3.9"
+sanic = "^21.6.2"
+PyJWT = "^2.1.0"
+flatten-dict = "^0.4.1"
+aioredis = "^2.0.0"
 
 [tool.poetry.dev-dependencies]
-isort = "^4.3.20"
-black = "^19.3b0"
-pylint = "^2.3.1"
-pytest = "3.6.*"
-pytest-asyncio = "*"
-pytest-cov = "*"
-pytest-redis = "*"
-mypy = "^0.740.0"
-pytest-sanic = "^1.1"
+isort = "^5.9.3"
+black = "^21.7b0"
+pylint = "^2.9.6"
+pytest = "^6.2.4"
+pytest-asyncio = "^0.15.1"
+pytest-cov = "^2.12.1"
+pytest-redis = "^2.1.1"
+mypy = "^0.910"
+pytest-sanic = "^1.8.1"
 
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["setuptools", "poetry>=1.1.4"]
+build-backend = "poetry.core.masonry.api"

@@ -1,4 +1,5 @@
 import pytest
+import uuid
 from sanic import Sanic
 from sanic.response import json
 from sanic.websocket import WebSocketProtocol
@@ -8,9 +9,9 @@ from sanic_jwt_extended.jwt_manager import JWT
 from tests.utils import DunnoValue
 
 
-@pytest.yield_fixture
+@pytest.fixture
 def app():
-    app = Sanic()
+    app = Sanic("sanic_jwt_extended" + str(uuid.uuid4()).replace("-", ""))
 
     with JWT.initialize(app) as manager:
         manager.config.secret_key = "secret"
@@ -41,22 +42,22 @@ async def test_jwt_required(test_cli):
         headers={JWT.config.jwt_header_key: f"{JWT.config.jwt_header_prefix} {token}"},
     )
 
-    assert resp.status == 204
+    assert resp.status_code == 204
 
 
 async def test_jwt_required_fail(test_cli):
     # Missing authorization header
     resp = await test_cli.get('/protected')
-    assert resp.status == 401
-    assert await resp.json() == {"msg": DunnoValue(str)}
+    assert resp.status_code == 401
+    assert resp.json() == {"msg": DunnoValue(str)}
 
     # Bad authorization header key
     token = JWT.create_access_token("user")
     resp = await test_cli.get(
         '/protected', headers={JWT.config.jwt_header_key: f"Token {token}"}
     )
-    assert resp.status == 422
-    assert await resp.json() == {"msg": DunnoValue(str)}
+    assert resp.status_code == 422
+    assert resp.json() == {"msg": DunnoValue(str)}
 
     # Wrong token type
     refresh_token = JWT.create_refresh_token("user")
@@ -66,8 +67,8 @@ async def test_jwt_required_fail(test_cli):
             JWT.config.jwt_header_key: f"{JWT.config.jwt_header_prefix} {refresh_token}"
         },
     )
-    assert resp.status == 422
-    assert await resp.json() == {"msg": DunnoValue(str)}
+    assert resp.status_code == 422
+    assert resp.json() == {"msg": DunnoValue(str)}
 
     # Check freshness
     refresh_token = JWT.create_access_token("user")
@@ -77,5 +78,5 @@ async def test_jwt_required_fail(test_cli):
             JWT.config.jwt_header_key: f"{JWT.config.jwt_header_prefix} {refresh_token}"
         },
     )
-    assert resp.status == 401
-    assert await resp.json() == {"msg": DunnoValue(str)}
+    assert resp.status_code == 401
+    assert resp.json() == {"msg": DunnoValue(str)}

@@ -1,4 +1,5 @@
 import pytest
+import uuid
 from sanic import Sanic
 
 from sanic_jwt_extended.exceptions import ConfigurationConflictError
@@ -9,7 +10,7 @@ from sanic_jwt_extended.tokens import Token
 class TestJWT:
     @pytest.fixture
     def app(self):
-        app = Sanic()
+        app = Sanic("sanic_jwt_extended" + str(uuid.uuid4()).replace("-", ""))
         return app
 
     # fmt: off

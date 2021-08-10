@@ -1,4 +1,5 @@
 import pytest
+import uuid
 from sanic import Sanic
 
 from sanic_jwt_extended.exceptions import ConfigurationConflictError
@@ -9,7 +10,7 @@ from sanic_jwt_extended.tokens import Token
 class TestToken:
     @pytest.fixture
     def jwt_manager(self):
-        app = Sanic()
+        app = Sanic("sanic_jwt_extended" + str(uuid.uuid4()).replace("-", ""))
         with JWT.initialize(app) as initialize:
             initialize.config.secret_key = "secret"
             initialize.config.use_blacklist = True

@@ -118,7 +118,7 @@ class JWT:
 
         token = jwt.encode(
             payload, secret, algorithm, header, cls.config.json_encoder
-        ).decode("utf-8")
+        )
 
         return token
 
