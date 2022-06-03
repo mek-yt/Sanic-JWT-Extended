@@ -22,21 +22,21 @@ classifiers=[
 
 [tool.poetry.dependencies]
 python = "^3.7.3"
-sanic = "^21.6.2"
-PyJWT = "^2.1.0"
+sanic = "^22.3.2"
+PyJWT = "^2.4.0"
 flatten-dict = "^0.4.1"
-aioredis = "^2.0.0"
+aioredis = "^2.0.1"
 
 [tool.poetry.dev-dependencies]
-isort = "^5.9.3"
-black = "^21.7b0"
-pylint = "^2.9.6"
-pytest = "^6.2.4"
-pytest-asyncio = "^0.15.1"
-pytest-cov = "^2.12.1"
-pytest-redis = "^2.1.1"
-mypy = "^0.910"
-pytest-sanic = "^1.8.1"
+isort = "^5.10.1"
+black = "^22.3.0"
+pylint = "^2.14.0"
+pytest = "^7.1.2"
+pytest-asyncio = "^0.18.3"
+pytest-cov = "^3.0.0"
+pytest-redis = "^2.4.0"
+mypy = "^0.960"
+pytest-sanic = "^1.9.1"
 
 [build-system]
 requires = ["setuptools", "poetry>=1.1.4"]
