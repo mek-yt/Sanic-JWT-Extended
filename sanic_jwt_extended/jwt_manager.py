@@ -24,6 +24,7 @@ from sanic_jwt_extended.handler import Handler
 
 
 class JWT(Extension):
+    name = "JWT"
     config = None
     handler = None
     blacklist = None
