@@ -22,7 +22,7 @@ classifiers=[
 
 [tool.poetry.dependencies]
 python = "^3.7.3"
-sanic = "^22.3.2"
+sanic = "^23.3.0"
 PyJWT = "^2.4.0"
 flatten-dict = "^0.4.1"
 aioredis = "^2.0.1"
