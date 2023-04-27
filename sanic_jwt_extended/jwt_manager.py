@@ -6,6 +6,7 @@ from contextlib import contextmanager
 import jwt
 from flatten_dict import flatten
 from jwt import ExpiredSignatureError, InvalidTokenError
+from sanic_ext import Extension
 
 from sanic_jwt_extended.blacklist import InMemoryBlacklist
 from sanic_jwt_extended.config import Config
@@ -22,10 +23,13 @@ from sanic_jwt_extended.exceptions import (
 from sanic_jwt_extended.handler import Handler
 
 
-class JWT:
+class JWT(Extension):
     config = None
     handler = None
     blacklist = None
+
+    def startup(self, bootstrap) -> None:
+        self.initialize(self.app)
 
     @classmethod
     @contextmanager
