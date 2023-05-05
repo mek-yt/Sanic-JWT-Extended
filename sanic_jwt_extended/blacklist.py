@@ -1,7 +1,7 @@
 import warnings
 from abc import ABC, abstractmethod
 
-from sanic_jwt_extended.redis import RedisConnection
+# from sanic_jwt_extended.redis import RedisConnection
 
 
 class BlacklistABC(ABC):  # pragma: no cover
@@ -32,19 +32,19 @@ class RedisBlacklist(BlacklistABC):  # pragma: no cover
     def __init__(self, connection_info):
         self.connection_info = connection_info
 
-    async def register(self, token):
-        if not RedisConnection.redis:
-            await RedisConnection.initialize(self.connection_info)
+    # async def register(self, token):
+    #     if not RedisConnection.redis:
+    #         await RedisConnection.initialize(self.connection_info)
 
-        kwargs = {}
+    #     kwargs = {}
 
-        if token.exp:
-            kwargs["expire"] = token.exp
+    #     if token.exp:
+    #         kwargs["expire"] = token.exp
 
-        await RedisConnection.set(token.jti.hex, token.raw_jwt, **kwargs)
+    #     await RedisConnection.set(token.jti.hex, token.raw_jwt, **kwargs)
 
-    async def is_blacklisted(self, token):
-        if not RedisConnection.redis:
-            await RedisConnection.initialize(self.connection_info)
+    # async def is_blacklisted(self, token):
+    #     if not RedisConnection.redis:
+    #         await RedisConnection.initialize(self.connection_info)
 
-        return bool(RedisConnection.get(token.jti.hex))
+    #     return bool(RedisConnection.get(token.jti.hex))
